@@ -52,7 +52,7 @@ class SList {
             return false;
           }
           else if (*Puntero==head){//principio
-            Val -> next=head;
+            Val -> next=*Puntero;
             head=Val;
             return true;
           }
