@@ -94,6 +94,7 @@ int main() {
   numbers -> insert(5);
   numbers -> insert(2);
   numbers -> insert(6);
+  numbers -> remove(2);
 
   cout << "Imprime normal: ";
   SListIterator<int> It=numbers -> begin();

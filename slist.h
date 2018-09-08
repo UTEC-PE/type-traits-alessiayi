@@ -69,10 +69,11 @@ class SList {
 
         bool remove(T value) {
           Node<T> **Puntero=&head;
-          if (!find(value,Val)){
+          if (!find(value,Puntero)){
             return false;
           }
           delete *Puntero;
+          *Puntero = (*Puntero) -> next;
           return true;
         }
 
