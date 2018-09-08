@@ -4,54 +4,87 @@
 #include "iterator.h"
 
 template <class T>
-class SListIterator : public Iterator<T> {     
-    public: 
+class SListIterator : public Iterator<T> {
+    public:
         SListIterator() : Iterator<T>() {};
         SListIterator(Node<T> *current) : Iterator<T>(current) {};
-        SListIterator<T> operator++();
+        SListIterator<T> operator++(){
+          this -> current=this -> current -> next;
+          return *this;
+        };
 };
 
 template <typename Tr>
-class SList {     
+class SList {
     public:
         typedef typename Tr::T T;
         typedef typename Tr::Operation Operation;
         typedef SListIterator<T> iterator;
-      
+
     private:
         Node<T>* head;
         Operation cmp;
-              
+
     public:
         SList() {
             head = nullptr;
         };
 
         bool find(T search, Node<T> **&pointer) {
-            // TODO
+          while (*pointer != nullptr){
+            if (cmp(search,(*pointer) -> data)){
+              return (*pointer) -> data==search;
+            }
+            *pointer = (*pointer) -> next;
+          }
+          return false;
         }
-             
-        bool insert(T data) {
-            // TODO
+
+        bool insert(T value) {
+          Node<T> *Val=new Node<T>(value);
+          if(!head){
+            head=Val;
+            Val -> next=nullptr;
+            return true;
+          }
+          Node<T> **Puntero=&head;
+          if (find(value,Puntero)){//ya hay
+            return false;
+          }
+          else if (*Puntero==head){//principio
+            Val -> next=head;
+            head=Val;
+            return true;
+          }
+          else if(!*Puntero){//final
+            Puntero=Val;
+            return true;
+          }
+          else{//medio
+            Val -> next=*Puntero;
+            Puntero=&Val;
+            return true;
+          }
         }
-             
-        bool remove(T item) {
-            // TODO
-        }  
-             
+
+        bool remove(T value) {
+          Node<T> *Val=new Node<T>(value);
+
+        }
+
         iterator begin() {
-            // TODO
+          return iterator(head);
         }
-             
+
         iterator end() {
-            // TODO
+          return iterator(nullptr);
         }
-             
+
         ~SList() {
             if (head) {
                 head->killSelf();
-            } 
-        }         
+            }
+        }
 };
 
 #endif
