@@ -31,18 +31,18 @@ class SList {
         };
 
         bool find(T search, Node<T> **&pointer) {
-          while (*pointer != nullptr){
+          while (*pointer){
             if (cmp(search,(*pointer) -> data)){
               return (*pointer) -> data==search;
             }
-            *pointer = (*pointer) -> next;
+            pointer = &((*pointer) -> next);
           }
           return false;
         }
 
         bool insert(T value) {
           Node<T> *Val=new Node<T>(value);
-          if(!head){
+          if(!head){//nada
             head=Val;
             Val -> next=nullptr;
             return true;
@@ -57,19 +57,23 @@ class SList {
             return true;
           }
           else if(!*Puntero){//final
-            Puntero=Val;
+            *Puntero=Val;
             return true;
           }
           else{//medio
             Val -> next=*Puntero;
-            Puntero=&Val;
+            *Puntero=Val;
             return true;
           }
         }
 
         bool remove(T value) {
-          Node<T> *Val=new Node<T>(value);
-
+          Node<T> **Puntero=&head;
+          if (!find(value,Val)){
+            return false;
+          }
+          delete *Puntero;
+          return true;
         }
 
         iterator begin() {
