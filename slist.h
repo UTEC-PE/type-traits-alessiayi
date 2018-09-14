@@ -39,8 +39,8 @@ class SList {
           }
           return false;
         }
-
-        bool insert(T value) {
+ 
+        bool insert(T value) { // Tu insert tiene demasiada lógica, se puede reducir bastante
           Node<T> *Val=new Node<T>(value);
           if(!head){//nada
             head=Val;
@@ -72,7 +72,7 @@ class SList {
           if (!find(value,Puntero)){
             return false;
           }
-          delete *Puntero;
+          delete *Puntero; // No puedes hacer el delete primero
           *Puntero = (*Puntero) -> next;
           return true;
         }
